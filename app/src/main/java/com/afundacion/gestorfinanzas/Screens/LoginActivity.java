@@ -2,8 +2,10 @@ package com.afundacion.gestorfinanzas.Screens;
 
 import static android.widget.Toast.LENGTH_SHORT;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,11 +15,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afundacion.gestorfinanzas.R;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.DriverPropertyInfo;
 
 /* Mostrará un formulario de inicio de sesión:
 • Deberá incluir un EditText para ingresar la dirección de correo electrónico.
@@ -28,26 +36,28 @@ import org.json.JSONObject;
 public class LoginActivity extends AppCompatActivity {
     //Atributos que necesitaremos
     private Context context=this;
-    private EditText editTextDireccion;
-    private EditText editTextContraseña;
-    private Button buttonEnviar;
-    private EditText editTextRegistro;
+    private EditText editTextDirection;
+    private EditText editTextPassword;
+    private Button buttonSend;
+    private EditText editTextRegister;
     private RequestQueue queue;
+    public static String url = "urldemockapi";
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         //Añadimos los elementos de nuestro xml
-        editTextDireccion=findViewById(R.id.direccion);
-        editTextContraseña=findViewById(R.id.contraseña);
-        buttonEnviar=findViewById(R.id.login);
-        editTextRegistro=findViewById(R.id.registro);
+        editTextDirection=findViewById(R.id.direction);
+        editTextPassword=findViewById(R.id.password);
+        buttonSend=findViewById(R.id.login);
+        editTextRegister=findViewById(R.id.register);
         //Proceso que se realiza al clicar en el editText de Registro
-        editTextRegistro.setOnClickListener(new View.OnClickListener() {
+        editTextRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "¿No tienes cuenta?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "¿No have account?", LENGTH_SHORT).show();
                 //Conectamos ese clicado con la actividad de Registro
                 Intent intent=new Intent(context,RegisterActivity.class);
                 context.startActivity(intent);
@@ -55,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         //Proceso al clicar el el boton de Login
-        buttonEnviar.setOnClickListener(new View.OnClickListener() {
+        buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendPostRequest();
@@ -63,14 +73,53 @@ public class LoginActivity extends AppCompatActivity {
             }
         });queue= Volley.newRequestQueue(this);
     }
-
+    //Post
     private void sendPostRequest() {
         JSONObject requestBody=new JSONObject();
         try{
-            requestBody.put()
+            requestBody.put("email",editTextDirection.getText().toString());
+            requestBody.put("password",editTextPassword.getText().toString());
         }catch (JSONException e){
             throw new RuntimeException();
         }
+        DriverPropertyInfo Server;
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                requestBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String receivedToken;
+                        try {
+                            receivedToken = response.getString("sessionToken");
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Toast.makeText(context, "Token " + receivedToken, Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context,HomeActivity. class);
+                        SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.putString("VALID_EMAIL", editTextDirection.getText().toString());
+                        editor.putString("VALID_TOKEN", receivedToken);
+                        editor.commit();
+                        finish();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error.networkResponse == null) {
+                    Toast.makeText(context, "Failed request",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    int serverCode = error.networkResponse.statusCode;
+                    Toast.makeText(context, "response status: "+serverCode,Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+
+        );this.queue.add(request);
     }
+
 
 }
