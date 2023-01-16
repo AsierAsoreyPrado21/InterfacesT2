@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.afundacion.gestorfinanzas.R;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /* Mostrará un formulario de inicio de sesión:
 • Deberá incluir un EditText para ingresar la dirección de correo electrónico.
@@ -51,9 +55,22 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
         //Proceso al clicar el el boton de Login
+        buttonEnviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendPostRequest();
 
+            }
+        });queue= Volley.newRequestQueue(this);
     }
 
-
+    private void sendPostRequest() {
+        JSONObject requestBody=new JSONObject();
+        try{
+            requestBody.put()
+        }catch (JSONException e){
+            throw new RuntimeException();
+        }
+    }
 
 }
