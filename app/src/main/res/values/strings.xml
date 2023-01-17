@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Gestor Finanzas</string>
+    <string-array name="spinnerOptions">
+        <item>Ingreso</item>
+        <item>Gasto</item>
+    </string-array>
 </resources>
