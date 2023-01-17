@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonSend;
     private TextView textViewRegister;
     private RequestQueue queue;
-    public static String url = "urldemockapi";
+    public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/";
 
     @SuppressLint("MissingInflatedId")
     @Override
