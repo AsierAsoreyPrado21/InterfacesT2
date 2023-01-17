@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText editTextDirection;
     private EditText editTextPassword;
     private Button buttonSend;
-    private EditText editTextRegister;
+    private TextView textViewRegister;
     private RequestQueue queue;
     public static String url = "urldemockapi";
 
@@ -52,9 +53,9 @@ public class LoginActivity extends AppCompatActivity {
         editTextDirection=findViewById(R.id.direction);
         editTextPassword=findViewById(R.id.password);
         buttonSend=findViewById(R.id.login);
-        editTextRegister=findViewById(R.id.register);
+        textViewRegister=findViewById(R.id.register);
         //Proceso que se realiza al clicar en el editText de Registro
-        editTextRegister.setOnClickListener(new View.OnClickListener() {
+        textViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "¿No have account?", LENGTH_SHORT).show();
@@ -73,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });queue= Volley.newRequestQueue(this);
     }
-    //Post
+    //Peticion Post
     private void sendPostRequest() {
         JSONObject requestBody=new JSONObject();
         try{
