@@ -10,6 +10,7 @@ package com.afundacion.gestorfinanzas.Screens;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,6 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
         //Inicializacion de la parte de XML
         editTextUser=findViewById(R.id.user);
         editTextDirection=findViewById(R.id.direction);
@@ -77,13 +79,15 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response){
                         Toast.makeText(context,"account created",Toast.LENGTH_SHORT).show();
-                        finish();
+                        Intent intent = new Intent(context, LoginActivity.class);
+                        context.startActivity(intent);
                     }
                 },new Response.ErrorListener(){
             @Override
             public void onErrorResponse(VolleyError error) {
                 if(error.networkResponse==null){
                     Toast.makeText(context,"failed request",Toast.LENGTH_SHORT).show();
+
                 }
                 else{
                     int serverCode=error.networkResponse.statusCode;
