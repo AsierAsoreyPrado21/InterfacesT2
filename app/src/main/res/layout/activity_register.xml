@@ -31,8 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3"
-            app:layout_constraintWidth_percent="0.5"
-            tools:ignore="DuplicateIds" />
+            app:layout_constraintWidth_percent="0.5" />
          <EditText
             android:id="@+id/password"
             android:layout_width="0dp"
@@ -120,6 +119,7 @@
             android:layout_height="match_parent"
             android:hint="Email"
             android:textColor="@color/black"
+            android:textSize="11dp"
             android:background="@color/white"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
