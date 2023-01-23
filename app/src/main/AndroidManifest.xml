@@ -13,7 +13,7 @@
         android:theme="@style/Theme.GestorFinanzas"
         tools:targetApi="31">
         <activity
-            android:name=".Screens.TransictionActivity"
+            android:name=".Screens.HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +25,7 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".Screens.HomeActivity"/>
+        <activity android:name=".Screens.TransictionActivity"/>
         <activity android:name=".Launcher.LauncherActivity"/>
     </application>
 

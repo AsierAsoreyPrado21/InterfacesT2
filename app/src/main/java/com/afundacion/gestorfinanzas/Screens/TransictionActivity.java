@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.afundacion.gestorfinanzas.R;
 
@@ -37,6 +38,7 @@ public class TransictionActivity extends AppCompatActivity {
 
         spinnerTrans.setAdapter(adapter);
 
+
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -45,22 +47,26 @@ public class TransictionActivity extends AppCompatActivity {
                 String date = dateIns.getText().toString();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    if (!cantidadIng.getText().chars().allMatch((c -> Character.isDigit(c)))) {
-                        Toast.makeText(context, "En el apartado de Cantidad, debes incluir un número", Toast.LENGTH_LONG).show();
+                    if (!cantidadIng.getText().chars().allMatch((c -> Character.isDigit(c))) || cantidadIng.getText().toString().length() == 0) {
+                        //Toast.makeText(context, "En el apartado de Cantidad, debes incluir un número", Toast.LENGTH_LONG).show();
+                        cantidadIng.setError("Debes incluir una cantidad numérica");
                         cantidadCorrecta = false;
                     }
                 }
-                if(description.length() == 0){
-                    Toast.makeText(context, "Debes incluir una descripción", Toast.LENGTH_LONG).show();
+                if(description.isEmpty()){
+                    //Toast.makeText(context, "Debes incluir una descripción", Toast.LENGTH_LONG).show();
+                    descriptionT.setError("Debes incluir una descripción");
                     descCorrecta = false;
                 }
-                if(date.length() == 0){
-                    Toast.makeText(context, "Debes incluir una fecha", Toast.LENGTH_LONG).show();
+                if(date.isEmpty()){
+                    //Toast.makeText(context, "Debes incluir una fecha", Toast.LENGTH_LONG).show();
+                    dateIns.setError("Debes incluir una fecha");
                     dateCorrecta = false;
                 }
                 if(cantidadCorrecta && dateCorrecta && descCorrecta){
+                    String valorSpinner = (String) spinnerTrans.getSelectedItem();
                     int cantidad = Integer.parseInt(cantidadIng.getText().toString());
-                    Toast.makeText(context, "Enviando Formulario...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, valorSpinner, Toast.LENGTH_LONG).show();
                 }
             }
         });
