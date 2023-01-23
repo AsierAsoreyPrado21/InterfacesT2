@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
     private RequestQueue queue;
     public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/";
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +85,7 @@ public class LoginActivity extends AppCompatActivity {
         DriverPropertyInfo Server;
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                url,
+                url+"/sessions",
                 requestBody,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -98,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
                             throw new RuntimeException(e);
                         }
                         Toast.makeText(context, "Token " + receivedToken, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context,HomeActivity. class);
+                        Intent intent = new Intent(context,HomeFragment. class);
                         SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("VALID_EMAIL", editTextDirection.getText().toString());

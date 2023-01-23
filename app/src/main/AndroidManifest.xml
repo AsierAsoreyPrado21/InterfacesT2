@@ -13,6 +13,24 @@
         android:theme="@style/Theme.GestorFinanzas"
         tools:targetApi="31">
         <activity
+            android:name=".Navigation_Drawer"
+            android:exported="false"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/Theme.GestorFinanzas.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.GestorFinanzas.NoActionBar">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Launcher.LauncherActivity"
             android:exported="true">
             <intent-filter>
@@ -40,6 +58,19 @@
         </activity>
         <activity
             android:name=".Screens.RegisterActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Screens.Navigation_Drawer"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
