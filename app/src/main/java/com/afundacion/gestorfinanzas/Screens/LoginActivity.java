@@ -20,9 +20,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -73,37 +75,32 @@ public class LoginActivity extends AppCompatActivity {
             }
         });queue= Volley.newRequestQueue(this);
     }
-    //Peticion Post
+    //Peticion Get
     private void sendPostRequest() {
-        JSONObject requestBody=new JSONObject();
-        try{
-            requestBody.put("email",editTextDirection.getText().toString());
-            requestBody.put("password",editTextPassword.getText().toString());
-        }catch (JSONException e){
-            throw new RuntimeException();
-        }
-        DriverPropertyInfo Server;
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                url+"/sessions",
-                requestBody,
-                new Response.Listener<JSONObject>() {
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url+"/seasons?email="+editTextDirection.getText().toString(),
+                null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         String receivedToken;
+                        JSONObject usuario;
                         try {
-                            receivedToken = response.getString("sessionToken");
+                            usuario = response.getJSONObject(0);
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
                         Toast.makeText(context, "Token " + receivedToken, Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(context,HomeFragment. class);
                         SharedPreferences preferences = context.getSharedPreferences("SESSIONS_APP_PREFS", MODE_PRIVATE);
                         SharedPreferences.Editor editor = preferences.edit();
                         editor.putString("VALID_EMAIL", editTextDirection.getText().toString());
                         editor.putString("VALID_TOKEN", receivedToken);
                         editor.commit();
                         finish();
+                        Intent intent = new Intent(context,HomeFragment. class);
+                        startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
             @Override
