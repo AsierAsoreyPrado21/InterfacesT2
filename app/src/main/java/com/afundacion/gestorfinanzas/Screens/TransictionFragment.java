@@ -17,9 +17,11 @@ import android.widget.Toast;
 
 import com.afundacion.gestorfinanzas.R;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +39,7 @@ public class TransictionFragment extends Fragment {
     private String description;
     private String date;
     private String transactionType;
+    private RequestQueue requestQueue;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,7 +79,9 @@ public class TransictionFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        requestQueue = Volley.newRequestQueue(getActivity());
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,7 +129,7 @@ public class TransictionFragment extends Fragment {
                     if(cantidadCorrecta && dateCorrecta && descCorrecta){
                         transactionType = (String) spinnerTrans.getSelectedItem();
                         amount = Integer.parseInt(cantidadIng.getText().toString());
-                        Toast.makeText(getActivity(), transactionType, Toast.LENGTH_LONG).show();
+                        registerTransaction();
                     }
                 }
             });
@@ -168,5 +173,6 @@ public class TransictionFragment extends Fragment {
                 }
 
         );
+        this.requestQueue.add(request);
     }
 }
