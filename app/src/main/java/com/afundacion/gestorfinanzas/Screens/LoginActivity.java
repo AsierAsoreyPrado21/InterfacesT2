@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button buttonSend;
     private TextView textViewRegister;
     private RequestQueue queue;
-    public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/";
+    public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +88,9 @@ public class LoginActivity extends AppCompatActivity {
                         String receivedToken;
                         JSONObject usuario;
                         try {
+
                             usuario = response.getJSONObject(0);
+                            receivedToken=usuario.getString("token");
                         } catch (JSONException e) {
                             throw new RuntimeException(e);
                         }
@@ -99,8 +101,8 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("VALID_TOKEN", receivedToken);
                         editor.commit();
                         finish();
-                        Intent intent = new Intent(context,HomeFragment. class);
-                        startActivity(intent);
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override

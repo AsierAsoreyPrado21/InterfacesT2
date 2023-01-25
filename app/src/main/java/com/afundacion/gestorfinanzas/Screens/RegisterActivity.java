@@ -39,7 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button buttonRegister;
     private RequestQueue requestQueue;
     private Context context=this;
-    public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/";
+    public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
