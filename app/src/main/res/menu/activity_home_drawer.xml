@@ -9,12 +9,12 @@
             android:title="Home" />
         <item
             android:id="@+id/nav_anadir"
-            android:title="Añadir" />
+            android:title="Añadir Transaccion" />
         <item
             android:id="@+id/nav_estadisticas"
             android:title="Estadisticas" />
         <item
             android:id="@+id/nav_historial"
-            android:title="Historial" />
+            android:title="Historial de Transacciones" />
     </group>
 </menu>

@@ -56,6 +56,15 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "User: " +editTextUser.getText().toString(),Toast.LENGTH_SHORT).show();
+                if(editTextUser==null){
+                    Toast.makeText(context,"failed user",Toast.LENGTH_SHORT).show();
+                }
+                if(editTextDirection==null){
+                    Toast.makeText(context,"failed email",Toast.LENGTH_SHORT).show();
+                }
+                if(editTextPassword!=editTextConfirmPassword || editTextPassword==null || editTextConfirmPassword==null){
+                        Toast.makeText(context,"failed password",Toast.LENGTH_SHORT).show();
+                }
                 PostRegister();
             }
         });requestQueue= Volley.newRequestQueue(this);
@@ -67,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
             requestBody.put("user",editTextUser.getText().toString());
             requestBody.put("email",editTextDirection.getText().toString());
             requestBody.put("password",editTextPassword.getText().toString());
-            requestBody.put("password",editTextPassword.getText().toString());
+
         }catch (JSONException e){
             throw new RuntimeException(e);
         }

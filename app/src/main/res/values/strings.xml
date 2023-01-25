@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Gestor_Finanzas</string>
-    <string-array name="spinner">
+    <string-array name="Drawer">
+        <item>Home</item>
         <item>Agregar transaccion</item>
         <item>Historial transacciones</item>
         <item>Estadisticas</item>
@@ -19,4 +20,5 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_navigation_drawer">Navigation_Drawer</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>
