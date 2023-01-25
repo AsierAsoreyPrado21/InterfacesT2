@@ -1,6 +1,7 @@
 package com.afundacion.gestorfinanzas.Screens;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -20,9 +21,11 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,6 +43,7 @@ public class TransictionFragment extends Fragment {
     private String date;
     private String transactionType;
     private RequestQueue requestQueue;
+    private int userId;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -138,41 +142,81 @@ public class TransictionFragment extends Fragment {
     }
 
     private void registerTransaction(){
+
+        SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
+        String token = preferences.getString("VALID_TOKEN", null);
         JSONObject requestBody = new JSONObject();
 
-        try{
-            requestBody.put("amount", amount);
-            requestBody.put("description", description);
-            requestBody.put("date", date);
-            requestBody.put("transactionType", transactionType);
+        if(token != null) {
+            JsonArrayRequest request2 = new JsonArrayRequest(
+                    Request.Method.GET,
+                    "https://63c6654ddcdc478e15c08b47.mockapi.io/seasons?token=" + token,
+                    null,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                            try {
 
-        }catch(JSONException e){
-            throw new RuntimeException(e);
-        }
+                                JSONObject usuario = response.getJSONObject(0);
+                                userId = usuario.getInt("id");
 
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.POST,
-                "https://63c6654ddcdc478e15c08b47.mockapi.io/transaction",
-                requestBody,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Toast.makeText(getActivity(), "Transacción realizada con éxito", Toast.LENGTH_LONG).show();
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        if ( error.networkResponse == null){
-                            Toast.makeText(getActivity(), "Imposible conectar al servidor", Toast.LENGTH_SHORT).show();
-                        }else {
-                            int serverCode = error.networkResponse.statusCode;
-                            Toast.makeText(getActivity(), "Estado de respuesta: "+ serverCode, Toast.LENGTH_SHORT).show();
+                            } catch (JSONException | NullPointerException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if (error.networkResponse == null) {
+                                Toast.makeText(getActivity(), "Imposible conectar al servidor", Toast.LENGTH_SHORT).show();
+                            } else {
+                                int serverCode = error.networkResponse.statusCode;
+                                Toast.makeText(getActivity(), "Estado de respuesta: " + serverCode, Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
-                }
+            );
+            this.requestQueue.add(request2);
 
-        );
-        this.requestQueue.add(request);
+
+            try {
+                requestBody.put("amount", amount);
+                requestBody.put("description", description);
+                requestBody.put("date", date);
+                requestBody.put("transactionType", transactionType);
+
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+
+            String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/seasons/"+userId+"/transaction";
+
+            JsonObjectRequest request = new JsonObjectRequest(
+                    Request.Method.POST,
+                    url,
+                    requestBody,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            Toast.makeText(getActivity(), "Transacción realizada con éxito", Toast.LENGTH_LONG).show();
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            if (error.networkResponse == null) {
+                                Toast.makeText(getActivity(), "Imposible conectar al servidor", Toast.LENGTH_SHORT).show();
+                            } else {
+                                int serverCode = error.networkResponse.statusCode;
+                                Toast.makeText(getActivity(), "Estado de respuesta: " + serverCode, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+            );
+            this.requestQueue.add(request);
+        }
     }
 }
