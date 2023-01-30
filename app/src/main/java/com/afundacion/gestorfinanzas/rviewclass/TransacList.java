@@ -18,14 +18,14 @@ public class TransacList {
             try {
                 //JSONObject jsonElement = array.getJSONObject(i);
                 //JSONObject comicsObject = response.getJSONObject(i);
-                JSONObject comicsObject = array.getJSONObject(i);
+                JSONObject transacsObject = array.getJSONObject(i);
 
 //                Comics comic = new Comics();
 //                comic.setPhotoName(comicsObject.getString("name").toString());
 //                comic.setPhotoDescrip(comicsObject.getString("description").toString());
 //                comic.setPhotoUrl(comicsObject.getString("image_url"));
-                Transac aComics =new Transac(comicsObject);
-                transacs.add(aComics);
+                Transac aTransac =new Transac(transacsObject);
+                transacs.add(aTransac);
                 //Clip aClip =new Clip(jsonElement);
                 //clips.add(aClip);
             }catch (JSONException e) {
@@ -35,7 +35,7 @@ public class TransacList {
 
     }
 
-    public List<Transac> getComics() {
+    public List<Transac> getTransacs() {
         return transacs;
     }
 }

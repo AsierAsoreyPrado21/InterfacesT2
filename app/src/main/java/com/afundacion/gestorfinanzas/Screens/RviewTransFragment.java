@@ -136,7 +136,8 @@ public class RviewTransFragment extends Fragment {
                         //Toast.makeText(context, "Hit OK: " + response.getString("status"), Toast.LENGTH_LONG).show();
 
                         // Parseamos la respuesta y la asignamos a nuestro atributo
-                        setTransac(new TransacList(response));
+
+                        setTransacs(new TransacList(response));
 
                     }
                 },
@@ -298,7 +299,7 @@ public class RviewTransFragment extends Fragment {
 //        queue.add(jsonArrayRequest);
 //    }
 
-    public void setComics(TransacList transacs) {
+    public void setTransacs(TransacList transacs) {
 //        this.comics = comics;
 //        ComicsAdapter myAdapter = new ComicsAdapter (this.comics);
 //        recyclerView.setAdapter(myAdapter);
@@ -314,12 +315,13 @@ public class RviewTransFragment extends Fragment {
             public void onClick(View view) {
                 int x=recyclerView.getChildAdapterPosition(view);
                 Transac dataForThisCell= transacs.getTransacs().get(x);
-                String name=dataForThisCell.getPhotoName();
-                String description = dataForThisCell.getPhotoDescrip();
-                String image_url = dataForThisCell.getPhotoUrl();
+                String dateTrans=dataForThisCell.getDateTrans();
+                String typeTrans= dataForThisCell.getTypeTrans();
+                String amounTrans = dataForThisCell.getAmounTrans();
+                String descripTrans = dataForThisCell.getDescripTrans();
 
                 Toast.makeText(view.getContext(),
-                        "Do Something With this Click  "+name, Toast.LENGTH_SHORT).show();
+                        "Do Something With this Click  "+amounTrans, Toast.LENGTH_SHORT).show();
 
 //
 //                Bundle datosAEnviar = new Bundle();
@@ -342,9 +344,9 @@ public class RviewTransFragment extends Fragment {
 //                fragmentTransaction.commit();
 
                 Bundle infToBeSend =new Bundle();
-                infToBeSend.putString("nameComics", name);
-                infToBeSend.putString("descripComics", description);
-                infToBeSend.putString("image_urlComics", image_url);
+                infToBeSend.putString("date", dateTrans);
+                infToBeSend.putString("transactionType", typeTrans);
+                infToBeSend.putString("Description", descripTrans);
 //
 //                getParentFragmentManager().setFragmentResult("key",infToBeSend);
                 //Navigation.findNavController(view).navigate(R.id.detalleTransacsFragment,infToBeSend);

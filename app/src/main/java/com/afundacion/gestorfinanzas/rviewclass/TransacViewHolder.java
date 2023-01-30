@@ -59,14 +59,14 @@ public class TransacViewHolder extends RecyclerView.ViewHolder implements View.O
 //        });
     }
 
-    public void bindComics (Transac comics){
-        String data = comics.getPhotoName();
+    public void bindComics (Transac Transacs){
+        String data = Transacs.getDateTrans();
         this.transacsTextView1.setText(data);
-        String typeTransac = comics.getPhotoDescrip();
+        String typeTransac = Transacs.getTypeTrans();
         this.transacsTextView2.setText(typeTransac);
-        String amount = comics.getPhotoName();
+        String amount = Transacs.getAmounTrans();
         this.transacsTextView1.setText(amount);
-        String description = comics.getPhotoDescrip();
+        String description = Transacs.getDescripTrans();
         this.transacsTextView2.setText(description);
 
         this.transacs=transacs;

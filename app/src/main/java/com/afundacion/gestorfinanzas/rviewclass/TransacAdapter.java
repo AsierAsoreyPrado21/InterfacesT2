@@ -33,15 +33,15 @@ public class TransacAdapter extends RecyclerView.Adapter<TransacViewHolder> impl
 
 
 
-    public TransacAdapter(TransacList comics){
-        this.transacsToBoShow=comics;
+    public TransacAdapter(TransacList transacs){
+        this.transacsToBoShow=transacs;
     }
 
     @NonNull
     @Override
     public TransacViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.comic_cell,parent,false);
+        View view = inflater.inflate(R.layout.transac_cell,parent,false);
         view.setOnClickListener(this);
         TransacViewHolder comicsViewHolder=new TransacViewHolder(view);
         return comicsViewHolder;
@@ -50,7 +50,7 @@ public class TransacAdapter extends RecyclerView.Adapter<TransacViewHolder> impl
     @Override
     public void onBindViewHolder(@NonNull TransacViewHolder holder, int position) {
 
-        Transac dataForThisCell= this.transacsToBoShow.getComics().get(position);
+        Transac dataForThisCell= this.transacsToBoShow.getTransacs().get(position);
         holder.bindComics(dataForThisCell);
 
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -64,7 +64,7 @@ public class TransacAdapter extends RecyclerView.Adapter<TransacViewHolder> impl
 
     @Override
     public int getItemCount() {
-        return this.transacsToBoShow.getComics().size();
+        return this.transacsToBoShow.getTransacs().size();
     }
 
     public void setOnClickListener (View.OnClickListener listener){

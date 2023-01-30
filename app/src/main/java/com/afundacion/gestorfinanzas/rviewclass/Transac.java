@@ -7,39 +7,49 @@ import java.io.Serializable;
 
 public class Transac implements Serializable {
 
-    private String photoName;
-    private String photoUrl;
-    private String photoDescrip;
+    private String dateTrans;
+    private String typeTrans;
+    private String amounTrans;
+    private String descripTrans;
 
 
     public Transac(JSONObject json) throws JSONException {
-        this.photoName= json.getString("name");
-        this.photoUrl = json.getString("image_url");
-        this.photoDescrip = json.getString("description");
+        this.dateTrans= json.getString("date");
+        this.typeTrans= json.getString("transactionType");
+        this.amounTrans= json.getString("amount");
+        this.descripTrans = json.getString("description");
 
     }
 
-    public String getPhotoName() {
-        return photoName;
+    public String getDateTrans() {
+        return dateTrans;
     }
 
-    public void setPhotoName(String photoName) {
-        this.photoName = photoName;
+    public void setDateTrans(String dateTrans) {
+        this.dateTrans = dateTrans;
     }
 
-    public String getPhotoUrl() {
-        return photoUrl;
+    public String getTypeTrans() {
+        return typeTrans;
     }
 
-    public void setPhotoUrl(String photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setTypeTrans(String typeTrans) {
+        this.typeTrans = typeTrans;
     }
 
-    public String getPhotoDescrip() {
-        return photoDescrip;
+    public String getAmounTrans() {
+        return amounTrans;
     }
 
-    public void setPhotoDescrip(String photoDescrip) {
-        this.photoDescrip = photoDescrip;
+    public void setAmounTrans(String amounTrans) {
+        this.amounTrans = amounTrans;
+    }
+
+    public String getDescripTrans() {
+        return descripTrans;
+    }
+
+    public void setDescripTrans(String descripTrans) {
+        this.descripTrans = descripTrans;
     }
 }
