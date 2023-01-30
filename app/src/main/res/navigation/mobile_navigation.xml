@@ -24,4 +24,9 @@
         android:id="@+id/nav_anadir"
         android:name="com.afundacion.gestorfinanzas.Screens.AnadirFragment"
         tools:layout="@layout/fragment_anadir" />
+    <fragment
+        android:id="@+id/rviewTransFragment"
+        android:name="com.afundacion.gestorfinanzas.Screens.RviewTransFragment"
+        android:label="fragment_rview_trans"
+        tools:layout="@layout/fragment_rview_trans" />
 </navigation>

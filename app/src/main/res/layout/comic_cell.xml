@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Date"
+                android:text="Date:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStarOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/text_type_trans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Type"
+                android:text="Descripción:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/text_date"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/text_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="amount"
+                android:text="amount:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/text_descrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="descrip"
+                android:text="Descripción:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/text_amount"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="---------------------------------------------------------"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

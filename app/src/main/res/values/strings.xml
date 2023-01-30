@@ -21,4 +21,8 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="title_activity_navigation_drawer">Navigation_Drawer</string>
     <string name="title_activity_main">MainActivity</string>
+
+    //menu contextual
+    <string name="rv_delete">Eliminar este Registro</string>
+    <string name="rv_change">Modificar este Registro</string>
 </resources>
