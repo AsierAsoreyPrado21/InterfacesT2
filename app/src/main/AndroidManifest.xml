@@ -19,6 +19,11 @@
             android:exported="true"
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/Theme.GestorFinanzas.NoActionBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -26,11 +31,7 @@
         <activity
             android:name=".Launcher.LauncherActivity"
             android:exported="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
