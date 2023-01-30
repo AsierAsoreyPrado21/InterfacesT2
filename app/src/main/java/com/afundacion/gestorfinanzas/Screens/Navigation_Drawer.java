@@ -8,6 +8,7 @@ import android.view.Menu;
 
 import com.afundacion.gestorfinanzas.R;
 
+import com.afundacion.gestorfinanzas.rviewclass.RviewTransFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -58,12 +59,12 @@ public class Navigation_Drawer extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_estadisticas:
                 drawerLayout.close();
-                Fragment fragmentEstadisticas = new EstadisticasFragment();
+                Fragment fragmentEstadisticas = new GraphDataFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentEstadisticas).commit();
                 break;
             case R.id.nav_historial:
                 drawerLayout.close();
-                Fragment fragmentHistorial = new HistorialFragment();
+                Fragment fragmentHistorial = new RviewTransFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentHistorial).commit();
                 break;
             case R.id.nav_anadir:

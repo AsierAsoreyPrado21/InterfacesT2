@@ -1,4 +1,4 @@
-package com.afundacion.gestorfinanzas.Screens;
+package com.afundacion.gestorfinanzas.rviewclass;
 
 import android.os.Bundle;
 
@@ -58,7 +58,7 @@ public class RviewTransFragment extends Fragment {
     private List<Transac> transacs;
 
     private LinearLayout mainLayout; // Añadimos un nuevo atributo xa implementar snakbar
-    private static  String URL="https://raw.githubusercontent.com/pmalavevfp/Interface22-23/main/API-REST/catalog.json";
+    private static  String URL="https://63c6654ddcdc478e15c08b47.mockapi.io";
     //AdapterComics adapterComics;
     TransacAdapter transacAdapter;
     private RequestQueue queue;
@@ -98,7 +98,7 @@ public class RviewTransFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerViewComics);
         transacs = new ArrayList<>();
 
-        requestComicsList();
+        requestTransacsList();
 
         // parseJsonComics();
 
@@ -119,11 +119,11 @@ public class RviewTransFragment extends Fragment {
 
     }
 
-    private void requestComicsList() {
+    private void requestTransacsList() {
         progressBar.setVisibility(View.VISIBLE);
 
         JsonArrayRequest jarequest = new JsonArrayRequest (
-                Request.Method.GET,URL,
+                Request.Method.GET,URL+"/seasons/1/transaction",
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override
@@ -170,7 +170,7 @@ public class RviewTransFragment extends Fragment {
         this.queue.add(jarequest);
     }
 
-    public TransacList getComics() {
+    public TransacList getTransacs() {
         return (TransacList) transacs;
     }
 
@@ -346,6 +346,7 @@ public class RviewTransFragment extends Fragment {
                 Bundle infToBeSend =new Bundle();
                 infToBeSend.putString("date", dateTrans);
                 infToBeSend.putString("transactionType", typeTrans);
+                infToBeSend.putString("amount", amounTrans);
                 infToBeSend.putString("Description", descripTrans);
 //
 //                getParentFragmentManager().setFragmentResult("key",infToBeSend);
