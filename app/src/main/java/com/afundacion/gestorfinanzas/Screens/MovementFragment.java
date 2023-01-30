@@ -95,19 +95,10 @@ public class MovementFragment extends Fragment {
         View layout = inflater.inflate(R.layout.movement_fragment, container, false);
 
         amountTV = layout.findViewById(R.id.amount);
-        Button boton = layout.findViewById(R.id.boton);
 
-        boton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    takeData();
-                    amountTV.setText(String.valueOf(totalAmount));
-                } catch (AuthFailureError e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        try {
+            getUserId();
+        }catch (AuthFailureError e){}
 
         //amountTV.setText(totalAmount);
         //Toast.makeText(getActivity(), totalAmount, Toast.LENGTH_LONG).show();
@@ -116,7 +107,7 @@ public class MovementFragment extends Fragment {
     }
 
 
-    private void takeData() throws AuthFailureError {
+    private void getUserId() throws AuthFailureError {
 
         //SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
         //String token = preferences.getString("VALID_TOKEN", null);
@@ -136,6 +127,7 @@ public class MovementFragment extends Fragment {
 
                                 JSONObject usuario = response.getJSONObject(0);
                                 userId = usuario.getInt("id");
+                                takeData();
 
                             } catch (JSONException | NullPointerException e) {
                                 e.printStackTrace();
@@ -156,57 +148,60 @@ public class MovementFragment extends Fragment {
                     }
             );
             queue.add(request);
-
-            String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/seasons/"+userId+"/transaction";
-
-            JsonArrayRequest request2 = new JsonArrayRequest(
-                    Request.Method.GET,
-                    url,
-                    null,
-                    new Response.Listener<JSONArray>() {
-                        @Override
-                        public void onResponse(JSONArray response) {
-                            try {
-
-                                for (int i = 0; i < response.length(); i++) {
-
-                                    JSONObject jsonObject = response.getJSONObject(i);
-                                    int amount = jsonObject.getInt("amount");
-                                    String type = jsonObject.getString("transactionType");
-
-                                    if (type.equalsIgnoreCase("Ingreso")) {
-                                        totalAmount += amount;
-                                    } else {
-                                        totalAmount -= amount;
-                                    }
-
-                                }
-
-                                Toast.makeText(getActivity(), totalAmount, Toast.LENGTH_LONG).show();
-
-                            } catch (JSONException | NullPointerException e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse == null) {
-                                Toast.makeText(getActivity(), "Imposible conectar al servidor", Toast.LENGTH_SHORT).show();
-                            } else {
-                                int serverCode = error.networkResponse.statusCode;
-                                Toast.makeText(getActivity(), "Estado de respuesta: " + serverCode, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-            );
-            queue.add(request2);
         }else{
             Toast.makeText(getActivity(), "No furrula", Toast.LENGTH_LONG).show();
             throw new AuthFailureError();
         }
+    }
+
+    private void takeData(){
+
+        String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/seasons/"+userId+"/transaction";
+
+        JsonArrayRequest request = new JsonArrayRequest(
+                Request.Method.GET,
+                url,
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                int amount = jsonObject.getInt("amount");
+                                String type = jsonObject.getString("transactionType");
+
+                                if (type.equalsIgnoreCase("Ingreso")) {
+                                    totalAmount += amount;
+                                } else {
+                                    totalAmount -= amount;
+                                }
+
+                            }
+
+                            amountTV.setText(String.valueOf(totalAmount));
+
+                        } catch (JSONException | NullPointerException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse == null) {
+                            Toast.makeText(getActivity(), "Imposible conectar al servidor", Toast.LENGTH_SHORT).show();
+                        } else {
+                            int serverCode = error.networkResponse.statusCode;
+                            Toast.makeText(getActivity(), "Estado de respuesta: " + serverCode, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+        );
+        queue.add(request);
     }
 
 }

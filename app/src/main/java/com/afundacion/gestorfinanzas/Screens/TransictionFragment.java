@@ -133,7 +133,7 @@ public class TransictionFragment extends Fragment {
                     if(cantidadCorrecta && dateCorrecta && descCorrecta){
                         transactionType = (String) spinnerTrans.getSelectedItem();
                         amount = Integer.parseInt(cantidadIng.getText().toString());
-                        registerTransaction();
+                        getUserId();
                     }
                 }
             });
@@ -141,15 +141,14 @@ public class TransictionFragment extends Fragment {
         return layout;
     }
 
-    private void registerTransaction(){
+    private void getUserId(){
 
         //SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
         //String token = preferences.getString("VALID_TOKEN", null);
         String token = "token 1";
-        JSONObject requestBody = new JSONObject();
 
         if(token != null) {
-            JsonArrayRequest request2 = new JsonArrayRequest(
+            JsonArrayRequest request = new JsonArrayRequest(
                     Request.Method.GET,
                     "https://63c6654ddcdc478e15c08b47.mockapi.io/seasons?token=" + token,
                     null,
@@ -160,6 +159,7 @@ public class TransictionFragment extends Fragment {
 
                                 JSONObject usuario = response.getJSONObject(0);
                                 userId = usuario.getInt("id");
+                                registerTransaction();
 
                             } catch (JSONException | NullPointerException e) {
                                 e.printStackTrace();
@@ -179,45 +179,49 @@ public class TransictionFragment extends Fragment {
                         }
                     }
             );
-            this.requestQueue.add(request2);
-
-
-            try {
-                requestBody.put("amount", amount);
-                requestBody.put("description", description);
-                requestBody.put("date", date);
-                requestBody.put("transactionType", transactionType);
-
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            }
-
-            String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/seasons/"+userId+"/transaction";
-
-            JsonObjectRequest request = new JsonObjectRequest(
-                    Request.Method.POST,
-                    url,
-                    requestBody,
-                    new Response.Listener<JSONObject>() {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            Toast.makeText(getActivity(), "Transacción realizada con éxito", Toast.LENGTH_LONG).show();
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            if (error.networkResponse == null) {
-                                Toast.makeText(getActivity(), "Imposible conectar al servidor", Toast.LENGTH_SHORT).show();
-                            } else {
-                                int serverCode = error.networkResponse.statusCode;
-                                Toast.makeText(getActivity(), "Estado de respuesta: " + serverCode, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-
-            );
             this.requestQueue.add(request);
         }
+    }
+
+    private void registerTransaction(){
+
+        JSONObject requestBody = new JSONObject();
+
+        try {
+            requestBody.put("amount", amount);
+            requestBody.put("description", description);
+            requestBody.put("date", date);
+            requestBody.put("transactionType", transactionType);
+
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        String url = "https://63c6654ddcdc478e15c08b47.mockapi.io/seasons/"+userId+"/transaction";
+
+        JsonObjectRequest request = new JsonObjectRequest(
+                Request.Method.POST,
+                url,
+                requestBody,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getActivity(), "Transacción realizada con éxito", Toast.LENGTH_LONG).show();
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        if (error.networkResponse == null) {
+                            Toast.makeText(getActivity(), "Imposible conectar al servidor", Toast.LENGTH_SHORT).show();
+                        } else {
+                            int serverCode = error.networkResponse.statusCode;
+                            Toast.makeText(getActivity(), "Estado de respuesta: " + serverCode, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+        );
+        this.requestQueue.add(request);
     }
 }
