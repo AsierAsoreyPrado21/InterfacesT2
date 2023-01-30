@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.afundacion.gestorfinanzas.Screens.LoginActivity;
+import com.afundacion.gestorfinanzas.Screens.RegisterActivity;
 
 
 public class LauncherActivity extends AppCompatActivity {
@@ -16,7 +17,7 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Toast.makeText(context, "Abriendo la aplicacion...", Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(context ,LoginActivity.class);
+        Intent intent = new Intent(context , LoginActivity.class);
         context.startActivity(intent);
     }
 }

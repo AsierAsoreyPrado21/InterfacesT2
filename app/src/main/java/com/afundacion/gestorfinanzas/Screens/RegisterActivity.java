@@ -1,14 +1,6 @@
 package com.afundacion.gestorfinanzas.Screens;
-/*
-• Mostrará un formulario de registro .
-• Deberá incluir un EditText para ingresar el nombre de usuario.
-• Deberá incluir un EditText para ingresar la dirección de correo electrónico.
-• Deberá incluir un EditText para ingresar la contraseña.
-• Deberá incluir un EditText para validar la contraseña.
-• Deberá incluir un botón de tipo "submit" para enviar el formulario.
-*/
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,16 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "User: " +editTextUser.getText().toString(),Toast.LENGTH_SHORT).show();
-                if(editTextUser==null){
-                    Toast.makeText(context,"failed user",Toast.LENGTH_SHORT).show();
-                }
-                if(editTextDirection==null){
-                    Toast.makeText(context,"failed email",Toast.LENGTH_SHORT).show();
-                }
-                if(editTextPassword!=editTextConfirmPassword || editTextPassword==null || editTextConfirmPassword==null){
-                        Toast.makeText(context,"failed password",Toast.LENGTH_SHORT).show();
-                }
                 PostRegister();
             }
         });requestQueue= Volley.newRequestQueue(this);
@@ -82,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
-                url+"/sessions",
+                url+"/seasons",
                 requestBody,
                 new Response.Listener<JSONObject>(){
                     @Override
