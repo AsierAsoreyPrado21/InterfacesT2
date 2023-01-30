@@ -102,6 +102,7 @@ public class MovementFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     takeData();
+                    amountTV.setText(String.valueOf(totalAmount));
                 } catch (AuthFailureError e) {
                     e.printStackTrace();
                 }
@@ -117,8 +118,9 @@ public class MovementFragment extends Fragment {
 
     private void takeData() throws AuthFailureError {
 
-        SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
-        String token = preferences.getString("VALID_TOKEN", null);
+        //SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
+        //String token = preferences.getString("VALID_TOKEN", null);
+        String token = "token 1";
 
 
         if (token != null) {

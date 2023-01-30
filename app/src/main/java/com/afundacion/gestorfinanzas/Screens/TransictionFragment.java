@@ -143,8 +143,9 @@ public class TransictionFragment extends Fragment {
 
     private void registerTransaction(){
 
-        SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
-        String token = preferences.getString("VALID_TOKEN", null);
+        //SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
+        //String token = preferences.getString("VALID_TOKEN", null);
+        String token = "token 1";
         JSONObject requestBody = new JSONObject();
 
         if(token != null) {

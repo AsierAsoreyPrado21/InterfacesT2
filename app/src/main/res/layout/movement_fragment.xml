@@ -9,7 +9,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/amount"
@@ -26,7 +26,7 @@
             android:id="@+id/amount1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
+            android:text="Aquí va el saldo 1"
             android:textSize="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/amount"
@@ -36,133 +36,13 @@
             android:id="@+id/type1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/amount2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/type2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/amount3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/type3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/amount4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/type4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/amount5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/type5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/amount6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/type6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/amount7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-        <TextView
-            android:id="@+id/type7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Aquí va el saldo"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
+            android:text="Aquí va el tipo del saldo 1"
+            android:textSize="10dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toEndOf="@+id/amount1"
+            app:layout_constraintTop_toBottomOf="@+id/amount" />
+       
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
