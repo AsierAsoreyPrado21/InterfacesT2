@@ -143,9 +143,9 @@ public class TransictionFragment extends Fragment {
 
     private void getUserId(){
 
-        //SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
-        //String token = preferences.getString("VALID_TOKEN", null);
-        String token = "token 1";
+        SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
+        String token = preferences.getString("VALID_TOKEN", null);
+        //String token = "token 1";
 
         if(token != null) {
             JsonArrayRequest request = new JsonArrayRequest(
