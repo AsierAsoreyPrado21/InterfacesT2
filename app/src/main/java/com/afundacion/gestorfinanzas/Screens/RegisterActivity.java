@@ -10,15 +10,18 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.view.menu.MenuBuilder;
 
 import com.afundacion.gestorfinanzas.R;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,7 +34,9 @@ public class RegisterActivity extends AppCompatActivity {
     private Button buttonRegister;
     private RequestQueue requestQueue;
     private Context context=this;
-    public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io";
+    public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io";///users/?email=
+    private RequestQueue queue;
+    private boolean condicion = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +52,81 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PostRegister();
+                if(editTextUser.length()==0){
+                    editTextUser.setError("Usuario invalido");
+                    condicion=false;
+                }
+                if(editTextDirection.length()==0) {
+                    editTextDirection.setError("Campo Vacío");
+                    condicion=false;
+                }
+                if(editTextPassword.length()==0) {
+                    editTextPassword.setError("Escriba una contraseña");
+                    condicion=false;
+                }
+                if(editTextConfirmPassword.length()==0) {
+                    editTextConfirmPassword.setError("Contraseña invalida");
+                    condicion=false;
+                }
+                if(!editTextConfirmPassword.getText().toString().equals(editTextPassword.getText().toString())) {
+                    editTextPassword.setError("Las contraseñas no coinciden");
+                    condicion=false;
+                }
+
+                if(condicion) {
+                    GetEmail();
+                }
             }
         });requestQueue= Volley.newRequestQueue(this);
+    }
+    //Peticion Get
+    private void GetEmail(){
+        JsonArrayRequest get = new JsonArrayRequest(
+                Request.Method.GET,
+                url + "/seasons?email=" + editTextDirection.getText().toString(),
+                null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        if(response.length()==0) {
+                            Toast.makeText(context, "Usuario no registrado", Toast.LENGTH_SHORT).show();
+                            PostRegister();
+                        }
+
+                        else {
+                            Toast.makeText(context, "Usuario ya registrado", Toast.LENGTH_SHORT).show();
+                            editTextDirection.setError("Email ya registrado");
+                            condicion = false;
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (error.networkResponse == null) {
+                    Toast.makeText(context, "Failed request",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    int serverCode = error.networkResponse.statusCode;
+                    Toast.makeText(context, "response status: "+serverCode,Toast.LENGTH_LONG).show();
+                }
+            }
+        });this.queue.add(get);
     }
     //Peticion Post
     private void PostRegister() {
         JSONObject requestBody = new JSONObject();
-        try{
-            requestBody.put("user",editTextUser.getText().toString());
-            requestBody.put("email",editTextDirection.getText().toString());
-            requestBody.put("password",editTextPassword.getText().toString());
+        try {
+
+            requestBody.put("user", editTextUser.getText().toString());
+            requestBody.put("email", editTextDirection.getText().toString());
+            requestBody.put("password", editTextPassword.getText().toString());
+            requestBody.put("Confirm password", editTextConfirmPassword.getText().toString());
+
 
         }catch (JSONException e){
             throw new RuntimeException(e);
         }
+
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 url+"/seasons",
