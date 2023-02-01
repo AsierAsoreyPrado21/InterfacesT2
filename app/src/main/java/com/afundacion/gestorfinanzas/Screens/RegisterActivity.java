@@ -35,7 +35,6 @@ public class RegisterActivity extends AppCompatActivity {
     private RequestQueue requestQueue;
     private Context context=this;
     public static String url = "https://63c6654ddcdc478e15c08b47.mockapi.io";///users/?email=
-    private RequestQueue queue;
     private boolean condicion = true;
 
     @Override
@@ -110,7 +109,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(context, "response status: "+serverCode,Toast.LENGTH_LONG).show();
                 }
             }
-        });this.queue.add(get);
+        });this.requestQueue.add(get);
     }
     //Peticion Post
     private void PostRegister() {
