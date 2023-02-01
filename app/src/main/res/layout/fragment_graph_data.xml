@@ -27,14 +27,14 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="Button1" />
+            android:text="Income" />
 
         <Button
             android:id="@+id/btn2"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Button2" />
+            android:text="Cost" />
 
     </LinearLayout>
 </LinearLayout>
