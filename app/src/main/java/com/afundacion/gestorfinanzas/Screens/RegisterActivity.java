@@ -55,31 +55,35 @@ public class RegisterActivity extends AppCompatActivity {
                     editTextUser.setError("Usuario invalido");
                     condicion=false;
                 }
-                if(editTextDirection.length()==0) {
+                else if(editTextDirection.length()==0) {
                     editTextDirection.setError("Campo Vacío");
                     condicion=false;
                 }
-                if(editTextPassword.length()==0) {
+                else if(editTextPassword.length()==0) {
                     editTextPassword.setError("Escriba una contraseña");
                     condicion=false;
                 }
-                if(editTextConfirmPassword.length()==0) {
+                else if(editTextConfirmPassword.length()==0) {
                     editTextConfirmPassword.setError("Contraseña invalida");
+
                     condicion=false;
                 }
-                if(!editTextConfirmPassword.getText().toString().equals(editTextPassword.getText().toString())) {
+                else if(!editTextConfirmPassword.getText().toString().equals(editTextPassword.getText().toString())) {
                     editTextPassword.setError("Las contraseñas no coinciden");
                     condicion=false;
                 }
-
+                else {
+                    condicion = true;
+                }
                 if(condicion) {
                     GetEmail();
                 }
             }
-        });requestQueue= Volley.newRequestQueue(this);
+        });
     }
     //Peticion Get
     private void GetEmail(){
+        requestQueue= Volley.newRequestQueue(this);
         JsonArrayRequest get = new JsonArrayRequest(
                 Request.Method.GET,
                 url + "/seasons?email=" + editTextDirection.getText().toString(),
@@ -95,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
                         else {
                             Toast.makeText(context, "Usuario ya registrado", Toast.LENGTH_SHORT).show();
                             editTextDirection.setError("Email ya registrado");
-                            condicion = false;
+                            //condicion = false;
                         }
                     }
                 }, new Response.ErrorListener() {
