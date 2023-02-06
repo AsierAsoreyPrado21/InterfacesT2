@@ -1,11 +1,12 @@
 package com.afundacion.gestorfinanzas.Screens;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -100,6 +103,8 @@ public class TransictionFragment extends Fragment {
             Spinner spinnerTrans = layout.findViewById(R.id.spinner);
             Button buttonSub = layout.findViewById(R.id.button);
 
+            dateIns.setText(String.valueOf(LocalDate.now()));
+
             ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getActivity(), R.array.spinnerOptions, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
@@ -130,6 +135,25 @@ public class TransictionFragment extends Fragment {
                         dateIns.setError("Debes incluir una fecha");
                         dateCorrecta = false;
                     }
+                    if(date.length() != 10){
+                        dateIns.setError("La fecha debe de tener un formato de dd/mm/yyyy");
+                        dateCorrecta = false;
+                    }else{
+                        if(date.charAt(2) != '/' || date.charAt(5) != '/'){
+                            dateIns.setError("La fecha debe de tener un formato de dd/mm/yyyy");
+                            dateCorrecta = false;
+                        }else{
+                            if(Integer.parseInt(date.substring(3,2)) < 1 || Integer.parseInt(date.substring(3,2)) > 12){
+                                dateIns.setError("Mes no correcto");
+                                dateCorrecta = false;
+                            }else{
+                                if(Integer.parseInt(date.substring(0,2)) < 1 || Integer.parseInt(date.substring(0,2)) > 31){
+                                    System.out.println("Pazos");
+                                }
+                            }
+                        }
+                    }
+
                     if(cantidadCorrecta && dateCorrecta && descCorrecta){
                         transactionType = (String) spinnerTrans.getSelectedItem();
                         amount = Integer.parseInt(cantidadIng.getText().toString());
