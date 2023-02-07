@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:orientation="horizontal"
-        tools:ignore="MissingConstraints">
+        >
 
         <LinearLayout
             android:layout_width="120dp"
@@ -27,7 +27,16 @@
                 android:id="@+id/text_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Date"
+                android:text="Date:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
+                android:id="@+id/text_date1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
                 android:text="Date:"
                 android:textSize="15sp"
                 android:textColor="@android:color/black"
@@ -43,7 +52,16 @@
                 android:textColor="@android:color/black"
                 app:layout_constraintTop_toBottomOf="@id/text_date"
                 app:layout_constraintStart_toStartOf="parent"/>
-
+            <TextView
+                android:id="@+id/text_type_trans1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Type"
+                android:text="Descripción:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/text_date"
+                app:layout_constraintStart_toStartOf="parent"/>
         </LinearLayout>
 
         <LinearLayout
@@ -63,7 +81,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
             <TextView
+                android:id="@+id/text_amount1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="amount"
+                android:text="amount:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+            <TextView
                 android:id="@+id/text_descrip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="descrip"
+                android:text="Descripción:"
+                android:textSize="15sp"
+                android:textColor="@android:color/black"
+                app:layout_constraintTop_toBottomOf="@id/text_amount"
+                app:layout_constraintStart_toStartOf="parent"/>
+            <TextView
+                android:id="@+id/text_descrip1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="descrip"

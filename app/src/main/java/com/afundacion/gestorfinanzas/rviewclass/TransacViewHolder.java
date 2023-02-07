@@ -13,7 +13,7 @@ import com.afundacion.gestorfinanzas.R;
 public class TransacViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
     private TextView transacsTextView1,transacsTextView2, transacsTextView3, transacsTextView4 ;
-
+    private TextView transacsTextView5,transacsTextView6, transacsTextView7, transacsTextView8 ;
 
 
     private Transac transacs;
@@ -27,6 +27,11 @@ public class TransacViewHolder extends RecyclerView.ViewHolder implements View.O
         transacsTextView2=itemView.findViewById(R.id.text_type_trans);
         transacsTextView3=itemView.findViewById(R.id.text_amount);
         transacsTextView4=itemView.findViewById(R.id.text_descrip);
+        transacsTextView5=itemView.findViewById(R.id.text_date1);
+        transacsTextView6=itemView.findViewById(R.id.text_type_trans1);
+        transacsTextView7=itemView.findViewById(R.id.text_amount1);
+        transacsTextView8=itemView.findViewById(R.id.text_descrip1);
+
 
         itemView.setOnCreateContextMenuListener(this);
 //        itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,17 +64,17 @@ public class TransacViewHolder extends RecyclerView.ViewHolder implements View.O
 //        });
     }
 
-    public void bindComics (Transac Transacs){
-        String data = Transacs.getDateTrans();
-        this.transacsTextView1.setText(data);
-        String typeTransac = Transacs.getTypeTrans();
-        this.transacsTextView2.setText(typeTransac);
-        String amount = Transacs.getAmounTrans();
-        this.transacsTextView1.setText(amount);
-        String description = Transacs.getDescripTrans();
-        this.transacsTextView2.setText(description);
+    public void bindComics (Transac transacs){
+        String data = transacs.getDateTrans();
+        this.transacsTextView5.setText(data);
+        String typeTransac = transacs.getTypeTrans();
+        this.transacsTextView6.setText(typeTransac);
+        String amount = transacs.getAmounTrans();
+        this.transacsTextView7.setText(amount);
+        String description = transacs.getDescripTrans();
+        this.transacsTextView8.setText(description);
 
-        this.transacs=transacs;
+        //this.transacs=transacs;
 
     }
 
