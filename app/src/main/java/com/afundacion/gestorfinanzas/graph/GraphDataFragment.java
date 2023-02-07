@@ -6,14 +6,13 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.afundacion.gestorfinanzas.R;
-import com.afundacion.gestorfinanzas.rviewclass.Transac;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -36,9 +35,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-
-
 
 
 public class GraphDataFragment extends Fragment {
@@ -52,7 +53,7 @@ public class GraphDataFragment extends Fragment {
 
     private ProgressBar progressBar;
 
-    ArrayList<String> transacsList= new ArrayList();
+   private  ArrayList<JSONObject> transacsList= new ArrayList();
 
 
     public GraphDataFragment() {
@@ -79,7 +80,7 @@ public class GraphDataFragment extends Fragment {
 
 
         this.queue = Volley.newRequestQueue(getContext());
-        this.progressBar=view.findViewById(R.id.progress_circular);
+        //this.progressBar=view.findViewById(R.id.progress_circular);
         lineChart = (LineChart) view.findViewById(R.id.lineChart);
         Button btn1=view.findViewById(R.id.btn1);
         Button btn2=view.findViewById(R.id.btn2);
@@ -87,7 +88,11 @@ public class GraphDataFragment extends Fragment {
 
         //requestTransacsList();
 
-        chartShow ();
+//        try {
+//            chartShow (transacsList);
+//        } catch (JSONException e) {
+//            throw new RuntimeException(e);
+//        }
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +100,11 @@ public class GraphDataFragment extends Fragment {
                 Context context =getContext();
                 Toast.makeText(context,"Incomes", Toast.LENGTH_LONG).show();
                 typegraph=1;
-                chartShow();
+                try {
+                    chartShow(transacsList);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
 
@@ -106,19 +115,27 @@ public class GraphDataFragment extends Fragment {
                 //Navigation.findNavController(view).navigate(R.id.detalleTransacsFragment,infToBeSend);
                 //getActivity().onBackPressed();
                 typegraph=2;
-                chartShow();
+                try {
+                    chartShow(transacsList);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
 
             }
         });
-
-        chartShow ();
+        try {
+            requestTransacsList();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+        //chartShow ();
 
     }
 
 
 
-    private void requestTransacsList() {
-        progressBar.setVisibility(View.VISIBLE);
+    private void requestTransacsList() throws JSONException {
+        //progressBar.setVisibility(View.VISIBLE);
 
         //ArrayList<> transacs= new ArrayList<>();
 
@@ -130,7 +147,7 @@ public class GraphDataFragment extends Fragment {
                     public void onResponse(JSONArray response) {
 
 
-                        progressBar.setVisibility(View.INVISIBLE);
+                       // progressBar.setVisibility(View.INVISIBLE);
                         // ar.setVisibility(View.INVISIBLE);
 
                         //Snackbar.make(mainLayout, "List received", Snackbar.LENGTH_SHORT).show();
@@ -146,25 +163,31 @@ public class GraphDataFragment extends Fragment {
                                 //JSONObject jsonElement = array.getJSONObject(i);
                                 //JSONObject comicsObject = response.getJSONObject(i);
                                 JSONObject transacsObject = response.getJSONObject(i);
+                                transacsList.add(transacsObject);
 
-                                transacsList.add(String.valueOf(transacsObject.getInt("amount")));
-                                transacsList.add(transacsObject.getString("description"));
-                                transacsList.add(transacsObject.getString("date"));
-                                transacsList.add(transacsObject.getString("transactionType"));
+//                                transacsList.add(String.valueOf(transacsObject.getInt("amount")));
+//                                transacsList.add(transacsObject.getString("description"));
+//                                transacsList.add(transacsObject.getString("date"));
+//                                transacsList.add(transacsObject.getString("transactionType"));
 
                             }catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
                         }
-
+                        try {
+                            chartShow(transacsList);
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
+
                 },
 
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse (VolleyError error) {
 
-                        progressBar.setVisibility(View.INVISIBLE);
+                        //progressBar.setVisibility(View.INVISIBLE);
 
                         if (error.networkResponse == null) {
                             // No se ha establecido la conexión
@@ -186,11 +209,68 @@ public class GraphDataFragment extends Fragment {
         );
 
         this.queue.add(jarequest);
+
     }
-    private void chartShow() {
+    private void chartShow(ArrayList<JSONObject> transacsList) throws JSONException {
         ArrayList<String> xDays = new ArrayList<>();
         ArrayList<Entry> yIncomes = new ArrayList<>();
         ArrayList<Entry> yCosts = new ArrayList<>();
+
+        LocalDate dateAct= LocalDate.now();
+        Log.d ("Fecha Actual", String.valueOf(dateAct));
+
+        DateTimeFormatter dtf = DateTimeFormatter. ofPattern("DD/MM/YYYY");
+
+        Period periodo=Period.ofDays(7);
+
+        LocalDate datelimit=dateAct.minus(periodo);
+
+        Log.d ("Fecha 7 dias atras", String.valueOf(datelimit));
+
+        for (int i = 0; i< transacsList.size(); i++) {
+
+            JSONObject jsonObject= transacsList.get(i);
+
+            String date=jsonObject.getString("date");
+
+            LocalDate datearry =LocalDate.parse(date);
+
+
+            if (datearry.compareTo(datelimit)>0){
+                Duration dd= Duration.between(datearry.atStartOfDay(), datelimit.atStartOfDay());
+
+                int dd1=(int) dd.toDays();
+                //dd1=dd1*(-1);
+
+                String type=jsonObject.getString("transactionType");
+
+                //String type =transacsList.get (i+1);
+
+                if(type.equalsIgnoreCase("ingreso")){
+
+                    String amount=jsonObject.getString("amount");
+
+                    //String amount = transacsList.get (i-2);
+                    int amount1=Integer.parseInt(amount);
+                    yIncomes.add(new Entry(dd1,amount1));
+                }
+
+
+                if(type.equalsIgnoreCase("gasto")){
+                    String amount=jsonObject.getString("amount");
+                    //String amount = transacsList.get (i-2);
+                    int amount1=Integer.parseInt(amount);
+                    yIncomes.add(new Entry(dd1,amount1));
+                }
+                xDays.add(String.valueOf(dd1));
+               //dd++;
+            }
+
+        }
+
+
+
+
 //        double x = 0 ;
 //        int numDataPoints = 1000;
 //        for(int i=0;i<numDataPoints;i++){
@@ -234,28 +314,28 @@ String fechaManual = "10/01/2020";
 
          */
 
-        yIncomes.add(new Entry(12,123));
-        yIncomes.add(new Entry(13,134));
-        yIncomes.add(new Entry(14,145));
-        yIncomes.add(new Entry(15,155));
-        yIncomes.add(new Entry(16,111));
-        yIncomes.add(new Entry(17,121));
-        yIncomes.add(new Entry(18,113));
+//        yIncomes.add(new Entry(12,123));
+//        yIncomes.add(new Entry(13,134));
+//        yIncomes.add(new Entry(14,145));
+//        yIncomes.add(new Entry(15,155));
+//        yIncomes.add(new Entry(16,111));
+//        yIncomes.add(new Entry(17,121));
+//        yIncomes.add(new Entry(18,113));
+//
+//
+//        yCosts.add(new Entry(12,90));
+//        yCosts.add(new Entry(13,87));
+//        yCosts.add(new Entry(14,100));
+//        yCosts.add(new Entry(15,67));
+//        yCosts.add(new Entry(16,95));
+//        yCosts.add(new Entry(17,83));
+//        yCosts.add(new Entry(18,40));
 
-
-        yCosts.add(new Entry(12,90));
-        yCosts.add(new Entry(13,87));
-        yCosts.add(new Entry(14,100));
-        yCosts.add(new Entry(15,67));
-        yCosts.add(new Entry(16,95));
-        yCosts.add(new Entry(17,83));
-        yCosts.add(new Entry(18,40));
-
-//        String[] xdays = new String[xDays.size()];
-//        for(int i=0; i<xDays.size();i++){
-//            xdays[i] = xDays.get(i).toString();
-//        }
-        String [] xdays = {"12","13","14","15","16","17","18"};
+        String[] xdays = new String[xDays.size()];
+        for(int i=0; i<xDays.size();i++){
+            xdays[i] = xDays.get(i).toString();
+        }
+        //String [] xdays = {"12","13","14","15","16","17","18"};
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
 
         LineDataSet lineDataSet1 = new LineDataSet(yCosts,"Costs");
@@ -284,7 +364,7 @@ String fechaManual = "10/01/2020";
 
         //lineChart.setData(new LineData(xdays,lineDataSets));
 
-        lineChart.setVisibleXRangeMaximum(200f);
+        lineChart.setVisibleXRangeMaximum(20f);
         lineChart.invalidate();
     }
     }
