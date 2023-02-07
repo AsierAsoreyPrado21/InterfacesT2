@@ -34,13 +34,15 @@
         android:singleLine="true"
         app:layout_constraintTop_toTopOf="@+id/amount" />
 
-    <EditText
+    <TextView
         android:id="@+id/date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:hint="Fecha de transacción"
+        android:inputType="date"
         android:singleLine="true"
+        android:clickable="true"
         app:layout_constraintTop_toTopOf="@id/description" />
 
     <Spinner

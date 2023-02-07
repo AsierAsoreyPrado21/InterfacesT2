@@ -134,9 +134,9 @@ public class MovementFragment extends Fragment {
 
     private void getUserId() throws AuthFailureError {
 
-        //SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
-        //String token = preferences.getString("VALID_TOKEN", null);
-        String token = "token 1";
+        SharedPreferences preferences = getActivity().getSharedPreferences("SESSIONS_APP_PREFS", Context.MODE_PRIVATE);
+        String token = preferences.getString("VALID_TOKEN", null);
+        //String token = "token 1";
 
 
         if (token != null) {

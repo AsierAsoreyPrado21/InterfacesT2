@@ -22,6 +22,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, new TransictionFragment()).commit();
+
     }
 }
 

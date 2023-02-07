@@ -1,9 +1,10 @@
 package com.afundacion.gestorfinanzas.Screens;
 
-import android.app.Fragment;
+import androidx.fragment.app.Fragment;
+
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 
 
@@ -15,8 +16,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afundacion.gestorfinanzas.DatePicker;
 import com.afundacion.gestorfinanzas.R;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -30,9 +33,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +49,7 @@ public class TransictionFragment extends Fragment {
     private String transactionType;
     private RequestQueue requestQueue;
     private int userId;
+    private TextView dateIns;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,8 +60,8 @@ public class TransictionFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TransictionFragment() {
-        // Required empty public constructor
+    public TransictionFragment(){
+
     }
 
     /**
@@ -99,11 +102,11 @@ public class TransictionFragment extends Fragment {
 
         EditText cantidadIng = (EditText) layout.findViewById(R.id.amount);
             EditText descriptionT = (EditText) layout.findViewById(R.id.description);
-            EditText dateIns = (EditText) layout.findViewById(R.id.date);
+            dateIns = (TextView) layout.findViewById(R.id.date);
             Spinner spinnerTrans = layout.findViewById(R.id.spinner);
             Button buttonSub = layout.findViewById(R.id.button);
 
-            dateIns.setText(String.valueOf(LocalDate.now()));
+            //dateIns.setText(String.valueOf(LocalDate.now()));
 
             ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(getActivity(), R.array.spinnerOptions, android.R.layout.simple_spinner_item);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
@@ -118,13 +121,12 @@ public class TransictionFragment extends Fragment {
                     description = descriptionT.getText().toString();
                     date = dateIns.getText().toString();
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        if (!cantidadIng.getText().chars().allMatch((c -> Character.isDigit(c))) || cantidadIng.getText().toString().length() == 0) {
-                            //Toast.makeText(context, "En el apartado de Cantidad, debes incluir un número", Toast.LENGTH_LONG).show();
-                            cantidadIng.setError("Debes incluir una cantidad numérica");
-                            cantidadCorrecta = false;
-                        }
+                    if (!cantidadIng.getText().chars().allMatch((c -> Character.isDigit(c))) || cantidadIng.getText().toString().length() == 0) {
+                        //Toast.makeText(context, "En el apartado de Cantidad, debes incluir un número", Toast.LENGTH_LONG).show();
+                        cantidadIng.setError("Debes incluir una cantidad numérica");
+                        cantidadCorrecta = false;
                     }
+
                     if(description.isEmpty()){
                         //Toast.makeText(context, "Debes incluir una descripción", Toast.LENGTH_LONG).show();
                         descriptionT.setError("Debes incluir una descripción");
@@ -135,25 +137,6 @@ public class TransictionFragment extends Fragment {
                         dateIns.setError("Debes incluir una fecha");
                         dateCorrecta = false;
                     }
-                    if(date.length() != 10){
-                        dateIns.setError("La fecha debe de tener un formato de dd/mm/yyyy");
-                        dateCorrecta = false;
-                    }else{
-                        if(date.charAt(2) != '/' || date.charAt(5) != '/'){
-                            dateIns.setError("La fecha debe de tener un formato de dd/mm/yyyy");
-                            dateCorrecta = false;
-                        }else{
-                            if(Integer.parseInt(date.substring(3,2)) < 1 || Integer.parseInt(date.substring(3,2)) > 12){
-                                dateIns.setError("Mes no correcto");
-                                dateCorrecta = false;
-                            }else{
-                                if(Integer.parseInt(date.substring(0,2)) < 1 || Integer.parseInt(date.substring(0,2)) > 31){
-                                    System.out.println("Pazos");
-                                }
-                            }
-                        }
-                    }
-
                     if(cantidadCorrecta && dateCorrecta && descCorrecta){
                         transactionType = (String) spinnerTrans.getSelectedItem();
                         amount = Integer.parseInt(cantidadIng.getText().toString());
@@ -162,7 +145,38 @@ public class TransictionFragment extends Fragment {
                 }
             });
         // Inflate the layout for this fragment
+
+        dateIns.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()){
+                    case R.id.date:
+                        showDatePickerDialog();
+                        break;
+                }
+            }
+        });
+
         return layout;
+    }
+
+    private void showDatePickerDialog(){
+        DatePicker newFragment = DatePicker.newInstance(new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
+                String monthCambiado = String.valueOf(month+1), dayCambiado= String.valueOf(day);
+                if(month < 10){
+                    monthCambiado = "0"+(month+1);
+                }
+                if(day < 10){
+                    dayCambiado = "0"+day;
+                }
+                final String selectedDate = year + "-"+ monthCambiado+ "-"+dayCambiado;
+                dateIns.setText(selectedDate);
+            }
+        });
+
+        newFragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
     private void getUserId(){
