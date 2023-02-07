@@ -30,11 +30,6 @@ import org.json.JSONObject;
 
 import java.sql.DriverPropertyInfo;
 
-/* Mostrará un formulario de inicio de sesión:
-• Deberá incluir un EditText para ingresar la dirección de correo electrónico.
-• Deberá incluir un EditText para ingresar la contraseña.
-• Deberá incluir un botón de tipo "submit" para enviar el formulario.
-• Deberá incluir un enlace al registro por si somos nuevos usuarios*/
 
 public class LoginActivity extends AppCompatActivity {
     //Atributos que necesitaremos
@@ -70,9 +65,9 @@ public class LoginActivity extends AppCompatActivity {
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 sendPostRequest();
-
+                Intent intent=new Intent(context,Navigation_Drawer.class);
+                context.startActivity(intent);
             }
         });queue= Volley.newRequestQueue(this);
     }

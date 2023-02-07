@@ -12,7 +12,7 @@
             android:title="Añadir Transaccion" />
         <item
             android:id="@+id/nav_estadisticas"
-            android:title="Gráfica de las últimas 7 días" />
+            android:title="Graph Data last 7 days" />
         <item
             android:id="@+id/nav_historial"
             android:title="Historial de Transacciones" />
