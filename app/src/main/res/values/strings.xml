@@ -1,5 +1,10 @@
 <resources>
-    <string name="app_name">Gestor_Finanzas</string>
+    <string name="app_name">Gestor Finanzas</string>
+    <string-array name="spinnerOptions">
+        <item>Ingreso</item>
+        <item>Gasto</item>
+    </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
     <string-array name="Drawer">
         <item>Home</item>
         <item>Agregar transaccion</item>
