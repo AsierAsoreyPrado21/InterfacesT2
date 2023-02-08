@@ -45,7 +45,7 @@ import java.util.ArrayList;
 public class GraphDataFragment extends Fragment {
 
     LineChart lineChart;
-    private static  String URL="https://raw.githubusercontent.com/pmalavevfp/Interface22-23/main/API-REST/catalog.json";
+    private static  String URL="https://63c6654ddcdc478e15c08b47.mockapi.io";
 
     private RequestQueue queue;
     private View view;
@@ -79,11 +79,11 @@ public class GraphDataFragment extends Fragment {
 
 
         this.queue = Volley.newRequestQueue(getContext());
-        //this.progressBar=view.findViewById(R.id.progress_circular);
+
         lineChart = (LineChart) view.findViewById(R.id.lineChart);
         Button btn1=view.findViewById(R.id.btn1);
         Button btn2=view.findViewById(R.id.btn2);
-        //requestComicsList();
+
 
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,13 +91,13 @@ public class GraphDataFragment extends Fragment {
                 Context context =getContext();
                 Toast.makeText(context,"Incomes", Toast.LENGTH_LONG).show();
                 typegraph=1;
-//                try {
-//                    //chartShow(transacsList);
-//                    chartShow();
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-                chartShow();
+                try {
+                    chartShow(transacsList);
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                //chartShow();
             }
         });
 
@@ -108,69 +108,33 @@ public class GraphDataFragment extends Fragment {
                 //Navigation.findNavController(view).navigate(R.id.detalleTransacsFragment,infToBeSend);
                 //getActivity().onBackPressed();
                 typegraph=2;
-//                try {
-//                    //chartShow(transacsList);
-//                    chartShow();
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-                chartShow();
+                try {
+                    chartShow(transacsList);
+
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
+                //chartShow();
             }
         });
-//        try {
-//            requestTransacsList();
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
-//        }
-        chartShow();
+        try {
+            requestTransacsList();
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+            //chartShow();
 
 
-//        btn1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context =getContext();
-//                Toast.makeText(context,"Incomes", Toast.LENGTH_LONG).show();
-//                typegraph=1;
-//                try {
-//                    chartShow();
-//                    //chartShow(transacsList);
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        });
-//
-//        btn2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getActivity(),"costs", Toast.LENGTH_LONG).show();
-//                //Navigation.findNavController(view).navigate(R.id.detalleTransacsFragment,infToBeSend);
-//                //getActivity().onBackPressed();
-//                typegraph=2;
-//                try {
-//                    chartShow();
-//                    //chartShow(transacsList);
-//                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-//                }
-//
-//            }
-//        });
-//        try {
-//            requestTransacsList();
-//        } catch (JSONException e) {
-//            throw new RuntimeException(e);
-//        }
         //chartShow ();
 
     }
 
 
 
-    private void requestTransacsList() {  //throws JSONException {
-        //progressBar.setVisibility(View.VISIBLE);
+    private void requestTransacsList() throws JSONException {
 
-        //ArrayList<> transacs= new ArrayList<>();
+
+        ArrayList<JSONObject> transacs= new ArrayList<>();
 
         JsonArrayRequest jarequest = new JsonArrayRequest (
                 Request.Method.GET,URL+"/seasons/1/transaction",
@@ -179,11 +143,6 @@ public class GraphDataFragment extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
 
-
-                        // progressBar.setVisibility(View.INVISIBLE);
-                        // ar.setVisibility(View.INVISIBLE);
-
-                        //Snackbar.make(mainLayout, "List received", Snackbar.LENGTH_SHORT).show();
                         //Toast.makeText(context, "Hit OK: " + response.getString("status"), Toast.LENGTH_LONG).show();
 
                         // Parseamos la respuesta y la asignamos a nuestro atributo
@@ -207,13 +166,13 @@ public class GraphDataFragment extends Fragment {
                                 throw new RuntimeException(e);
                             }
                         }
-//                        try {
-//                            //chartShow(transacsList);
-//                            chartShow();
-//                        } catch (JSONException e) {
-//                            throw new RuntimeException(e);
-//                        }
-                        chartShow();
+                        try {
+                            chartShow(transacsList);
+                            //chartShow();
+                        } catch (JSONException e) {
+                            throw new RuntimeException(e);
+                        }
+                        //chartShow();
                     }
 
                 },
@@ -221,8 +180,6 @@ public class GraphDataFragment extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse (VolleyError error) {
-
-                        //progressBar.setVisibility(View.INVISIBLE);
 
                         if (error.networkResponse == null) {
                             // No se ha establecido la conexión
@@ -246,10 +203,10 @@ public class GraphDataFragment extends Fragment {
         this.queue.add(jarequest);
 
     }
-    //private void chartShow(ArrayList<JSONObject> transacsList) throws JSONException {
-    private void chartShow() { //throws JSONException {
+    private void chartShow(ArrayList<JSONObject> transacsList) throws JSONException {
+    //private void chartShow() { //throws JSONException {
 
-       // ArrayList<String> xDays = new ArrayList<>();
+        ArrayList<String> xDays = new ArrayList<>();
         ArrayList<Entry> yIncomes = new ArrayList<>();
         ArrayList<Entry> yCosts = new ArrayList<>();
 
@@ -265,70 +222,70 @@ public class GraphDataFragment extends Fragment {
 
         Log.d ("Fecha 7 dias atras", String.valueOf(datelimit));
 
-//        for (int i = 0; i< transacsList.size(); i++) {
-//
-//            JSONObject jsonObject= transacsList.get(i);
-//
-//            String date=jsonObject.getString("date");
-//
-//            LocalDate datearry =LocalDate.parse(date);
-//
-//
-//            if (datearry.compareTo(datelimit)>0){
-//                Duration dd= Duration.between(datearry.atStartOfDay(), datelimit.atStartOfDay());
-//
-//                int dd1=(int) dd.toDays();
-//                //dd1=dd1*(-1);
-//
-//                String type=jsonObject.getString("transactionType");
-//
-//                //String type =transacsList.get (i+1);
-//
-//                if(type.equalsIgnoreCase("ingreso")){
-//
-//                    String amount=jsonObject.getString("amount");
-//
-//                    //String amount = transacsList.get (i-2);
-//                    int amount1=Integer.parseInt(amount);
-//                    yIncomes.add(new Entry(dd1,amount1));
-//                }
+        for (int i = 0; i< transacsList.size(); i++) {
+
+            JSONObject jsonObject= transacsList.get(i);
+
+            String date=jsonObject.getString("date");
+
+            LocalDate datearry =LocalDate.parse(date);
 
 
-//                if(type.equalsIgnoreCase("gasto")){
-//                    String amount=jsonObject.getString("amount");
-//                    //String amount = transacsList.get (i-2);
-//                    int amount1=Integer.parseInt(amount);
-//                    yIncomes.add(new Entry(dd1,amount1));
-//                }
-//                xDays.add(String.valueOf(dd1));
-//                //dd++;
-//            }
+            if (datearry.compareTo(datelimit)>0){
+                Duration dd= Duration.between(datearry.atStartOfDay(), datelimit.atStartOfDay());
+
+                int dd1=(int) dd.toDays();
+                //dd1=dd1*(-1);
+
+                String type=jsonObject.getString("transactionType");
+
+                //String type =transacsList.get (i+1);
+
+                if(type.equalsIgnoreCase("ingreso")){
+
+                    String amount=jsonObject.getString("amount");
+
+                    //String amount = transacsList.get (i-2);
+                    int amount1=Integer.parseInt(amount);
+                    yIncomes.add(new Entry(dd1,amount1));
+                }
+
+
+                if(type.equalsIgnoreCase("gasto")){
+                    String amount=jsonObject.getString("amount");
+                    //String amount = transacsList.get (i-2);
+                    int amount1=Integer.parseInt(amount);
+                    yIncomes.add(new Entry(dd1,amount1));
+                }
+                xDays.add(String.valueOf(dd1));
+                //dd++;
+            }
+
+        }
+
+
+//        yIncomes.add(new Entry(12,123));
+//        yIncomes.add(new Entry(13,134));
+//        yIncomes.add(new Entry(14,145));
+//        yIncomes.add(new Entry(15,155));
+//        yIncomes.add(new Entry(16,111));
+//        yIncomes.add(new Entry(17,121));
+//        yIncomes.add(new Entry(18,113));
 //
-//        }
+//
+//        yCosts.add(new Entry(12,90));
+//        yCosts.add(new Entry(13,87));
+//        yCosts.add(new Entry(14,100));
+//        yCosts.add(new Entry(15,67));
+//        yCosts.add(new Entry(16,95));
+//        yCosts.add(new Entry(17,83));
+//        yCosts.add(new Entry(18,40));
 
-
-        yIncomes.add(new Entry(12,123));
-        yIncomes.add(new Entry(13,134));
-        yIncomes.add(new Entry(14,145));
-        yIncomes.add(new Entry(15,155));
-        yIncomes.add(new Entry(16,111));
-        yIncomes.add(new Entry(17,121));
-        yIncomes.add(new Entry(18,113));
-
-
-        yCosts.add(new Entry(12,90));
-        yCosts.add(new Entry(13,87));
-        yCosts.add(new Entry(14,100));
-        yCosts.add(new Entry(15,67));
-        yCosts.add(new Entry(16,95));
-        yCosts.add(new Entry(17,83));
-        yCosts.add(new Entry(18,40));
-
-//        String[] xdays = new String[xDays.size()];
-//        for(int i=0; i<xDays.size();i++){
-//            xdays[i] = xDays.get(i).toString();
-//        }
-        String [] xdays = {"12","13","14","15","16","17","18"};
+        String[] xdays = new String[xDays.size()];
+        for(int i=0; i<xDays.size();i++){
+            xdays[i] = xDays.get(i).toString();
+        }
+        //String [] xdays = {"12","13","14","15","16","17","18"};
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
 
         LineDataSet lineDataSet1 = new LineDataSet(yCosts,"Costs");
@@ -339,14 +296,15 @@ public class GraphDataFragment extends Fragment {
         lineDataSet2.setDrawCircles(false);
         lineDataSet2.setColor(Color.RED);
 
-        lineDataSets.add(lineDataSet1);
-        lineDataSets.add(lineDataSet2);
+//        lineDataSets.add(lineDataSet1);
+//        lineDataSets.add(lineDataSet2);
 
         if (typegraph==2) {
             lineDataSets.add(lineDataSet1);
         }
         if (typegraph==1) {
             lineDataSets.add(lineDataSet2);
+
         }
 
         if (typegraph==0){
@@ -358,6 +316,7 @@ public class GraphDataFragment extends Fragment {
         //lineChart.setData(new LineData(xdays,lineDataSets));
 
         lineChart.setVisibleXRangeMaximum(20f);
+        typegraph=0;
         lineChart.invalidate();
 
     }
