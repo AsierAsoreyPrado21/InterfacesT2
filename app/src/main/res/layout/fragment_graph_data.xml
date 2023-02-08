@@ -4,9 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".graphline.GraphDataFragment">
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    tools:context=".graph.GraphDataFragment"
+    android:orientation="vertical">
+
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:layout_marginTop="55dp"
+        android:id="@+id/lineChart"
+        android:layout_width="match_parent"
+        android:layout_height="380dp">
+
+    </com.github.mikephil.charting.charts.LineChart>
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal">
@@ -16,14 +27,14 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="5dp"
-            android:text="Button1" />
+            android:text="Income" />
 
         <Button
             android:id="@+id/btn2"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Button2" />
+            android:text="Cost" />
 
     </LinearLayout>
 </LinearLayout>
