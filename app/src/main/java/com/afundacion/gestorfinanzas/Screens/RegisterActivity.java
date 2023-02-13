@@ -42,6 +42,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        requestQueue= Volley.newRequestQueue(this);
+
         //Inicializacion de la parte de XML
         editTextUser=findViewById(R.id.user);
         editTextDirection=findViewById(R.id.direction);
@@ -83,7 +85,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
     //Peticion Get
     private void GetEmail(){
-        requestQueue= Volley.newRequestQueue(this);
         JsonArrayRequest get = new JsonArrayRequest(
                 Request.Method.GET,
                 url + "/seasons?email=" + editTextDirection.getText().toString(),
@@ -113,7 +114,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(context, "response status: "+serverCode,Toast.LENGTH_LONG).show();
                 }
             }
-        });this.requestQueue.add(get);
+        });
+        this.requestQueue.add(get);
     }
     //Peticion Post
     private void PostRegister() {
@@ -139,7 +141,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response){
                         Toast.makeText(context,"account created",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, LoginActivity.class);
-                        context.startActivity(intent);
+                        startActivity(intent);
                     }
                 },new Response.ErrorListener(){
             @Override
@@ -154,6 +156,7 @@ public class RegisterActivity extends AppCompatActivity {
                 }
             }
         }
-        );this.requestQueue.add(request);
+        );
+        this.requestQueue.add(request);
     }
 }

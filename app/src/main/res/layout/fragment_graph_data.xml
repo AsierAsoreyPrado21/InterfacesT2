@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".graphline.GraphDataFragment">
+    tools:context=".graphline.GraphDataFrag">
+
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"/>
 
         <Button
             android:id="@+id/btn1"
@@ -26,4 +28,3 @@
             android:text="Button2" />
 
     </LinearLayout>
-</LinearLayout>

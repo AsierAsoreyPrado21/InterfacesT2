@@ -66,8 +66,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sendPostRequest();
-                Intent intent=new Intent(context,Navigation_Drawer.class);
-                context.startActivity(intent);
             }
         });queue= Volley.newRequestQueue(this);
     }
@@ -96,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putString("VALID_EMAIL", editTextDirection.getText().toString());
                         editor.putString("VALID_TOKEN", receivedToken);
                         editor.commit();
-                        finish();
+                        Intent intent=new Intent(context,Navigation_Drawer.class);
+                        startActivity(intent);
 
 
                     }

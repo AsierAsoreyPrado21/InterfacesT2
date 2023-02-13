@@ -9,7 +9,7 @@ import android.view.Menu;
 import com.afundacion.gestorfinanzas.R;
 
 import com.afundacion.gestorfinanzas.rviewclass.RviewTransFragment;
-import com.afundacion.gestorfinanzas.graphline.GraphDataFragment;
+import com.afundacion.gestorfinanzas.graphline.GraphDataFrag;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -36,7 +36,7 @@ public class Navigation_Drawer extends AppCompatActivity implements NavigationVi
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar_id);
-        setSupportActionBar(toolbar);
+       // setSupportActionBar(toolbar);
         
         menu=navigationView.getMenu();
         navigationView.getHeaderView(0);
@@ -52,6 +52,8 @@ public class Navigation_Drawer extends AppCompatActivity implements NavigationVi
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+
         switch(item.getItemId()){
             case R.id.nav_home:
                 drawerLayout.close();
@@ -60,21 +62,23 @@ public class Navigation_Drawer extends AppCompatActivity implements NavigationVi
                 break;
             case R.id.nav_estadisticas:
                 drawerLayout.close();
-                Fragment fragmentEstadisticas = new GraphDataFragment();
+                Fragment fragmentEstadisticas = new GraphDataFrag();
                 getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentEstadisticas).commit();
                 break;
             case R.id.nav_historial:
                 drawerLayout.close();
-                Fragment fragmentHistorial = new RviewTransFragment();
+                Fragment fragmentHistorial = new MovementFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentHistorial).commit();
                 break;
             case R.id.nav_anadir:
                 drawerLayout.close();
-                Fragment fragmentAnadir = new AnadirFragment();
+                Fragment fragmentAnadir = new TransictionFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentAnadir).commit();
                 break;
         }
-        return false;
+
+        return true;
+
     }
 
 }

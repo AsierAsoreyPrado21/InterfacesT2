@@ -218,6 +218,8 @@ public class TransictionFragment extends Fragment {
                     }
             );
             this.requestQueue.add(request);
+        }else{
+            Toast.makeText(getActivity(), "non furrula", Toast.LENGTH_LONG).show();
         }
     }
 

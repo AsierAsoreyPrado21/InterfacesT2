@@ -68,7 +68,6 @@ public class GraphDataFragment extends Fragment {
 
         this.queue = Volley.newRequestQueue(getContext());
         this.progressBar=view.findViewById(R.id.progress_circular);
-        lineChart = (LineChart) view.findViewById(R.id.lineChart);
 
         //requestComicsList();
 

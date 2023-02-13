@@ -16,7 +16,7 @@ public class LauncherActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Toast.makeText(context, "Abriendo la aplicacion...", Toast.LENGTH_LONG).show();
+        //Toast.makeText(context, "Abriendo la aplicacion...", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(context , LoginActivity.class);
         context.startActivity(intent);
     }
