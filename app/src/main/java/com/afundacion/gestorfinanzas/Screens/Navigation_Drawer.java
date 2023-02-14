@@ -11,10 +11,6 @@ import com.afundacion.gestorfinanzas.R;
 
 import com.afundacion.gestorfinanzas.graph.GraphDataFragment;
 import com.afundacion.gestorfinanzas.rviewclass.RviewTransFragment;
-<<<<<<< HEAD
-=======
-import com.afundacion.gestorfinanzas.graphline.GraphDataFrag;
->>>>>>> main
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -63,19 +59,19 @@ public class Navigation_Drawer extends AppCompatActivity implements NavigationVi
         switch(item.getItemId()){
             case R.id.nav_home:
                 drawerLayout.close();
-                Fragment fragmentHome = new HomeFragment();
+                Fragment fragmentHome = new MovementFragment();
                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentHome).commit();
                 //Toast.makeText(context, "Maracana", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_estadisticas:
                 drawerLayout.close();
-                Fragment fragmentEstadisticas = new GraphDataFrag();
+                Fragment fragmentEstadisticas = new GraphDataFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentEstadisticas).commit();
                 //Toast.makeText(context, "Maracana", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_historial:
                 drawerLayout.close();
-                Fragment fragmentHistorial = new MovementFragment();
+                Fragment fragmentHistorial = new RviewTransFragment();
                 getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentHistorial).commit();
                 //Toast.makeText(context, "Maracana", Toast.LENGTH_LONG).show();
                 break;
