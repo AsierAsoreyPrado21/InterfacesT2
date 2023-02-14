@@ -81,9 +81,11 @@ public class GraphDataFragment extends Fragment {
 
         this.queue = Volley.newRequestQueue(getContext());
 
+
         lineChart = (LineChart) view.findViewById(R.id.lineChart);
         Button btn1=view.findViewById(R.id.btn1);
         Button btn2=view.findViewById(R.id.btn2);
+
 
 
         btn1.setOnClickListener(new View.OnClickListener() {
