@@ -9,8 +9,12 @@ import android.widget.Toast;
 
 import com.afundacion.gestorfinanzas.R;
 
+import com.afundacion.gestorfinanzas.graph.GraphDataFragment;
 import com.afundacion.gestorfinanzas.rviewclass.RviewTransFragment;
+<<<<<<< HEAD
+=======
 import com.afundacion.gestorfinanzas.graphline.GraphDataFrag;
+>>>>>>> main
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;

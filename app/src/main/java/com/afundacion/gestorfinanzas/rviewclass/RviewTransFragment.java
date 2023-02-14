@@ -57,18 +57,15 @@ public class RviewTransFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Transac> transacs;
 
-    private LinearLayout mainLayout; // Añadimos un nuevo atributo xa implementar snakbar
     private static  String URL="https://63c6654ddcdc478e15c08b47.mockapi.io";
     //AdapterComics adapterComics;
     TransacAdapter transacAdapter;
     private RequestQueue queue;
     private View view;
 
-    private boolean onClickIsOn=true;
-
     private ProgressBar progressBar;
 
-
+    int positionTrans;
 
     public RviewTransFragment() {
         // Required empty public constructor
@@ -100,22 +97,9 @@ public class RviewTransFragment extends Fragment {
 
         requestTransacsList();
 
-        // parseJsonComics();
-
         //esto es del menu contextual
         registerForContextMenu(recyclerView);
 
-//        while (onClickIsOn){
-//            if(ComicsViewHolder.clickCellOn==true){
-//
-//                getParentFragmentManager().setFragmentResult("key",ComicsViewHolder.infToBeSend);
-//                Navigation.findNavController(view).navigate(R.id.detalleComicsFragment);
-//
-//
-//                onClickIsOn=false;
-//            }
-//
-//        }
 
     }
 
@@ -130,9 +114,7 @@ public class RviewTransFragment extends Fragment {
                     public void onResponse(JSONArray response) {
 
                         progressBar.setVisibility(View.INVISIBLE);
-                        // ar.setVisibility(View.INVISIBLE);
 
-                        //Snackbar.make(mainLayout, "List received", Snackbar.LENGTH_SHORT).show();
                         //Toast.makeText(context, "Hit OK: " + response.getString("status"), Toast.LENGTH_LONG).show();
 
                         // Parseamos la respuesta y la asignamos a nuestro atributo
@@ -182,20 +164,23 @@ public class RviewTransFragment extends Fragment {
         int position = -1;
         try {
             position = ((TransacAdapter)recyclerView.getAdapter()).getPosition();
+
             Log.d("DetalleComicsFragment", "El IDxxxxxxxxxxxxxxx: " + position);
         } catch (Exception e) {
             Log.d(TAG, e.getLocalizedMessage(), e);
             return super.onContextItemSelected(item);
         }
-        //comics.get(position);
-//        Comics dataForThisCell= comics.getComics().get(position);
-//        String name=dataForThisCell.getPhotoName();
-//        Log.d("DetalleComicsFragment", "El IDyyyyyyyyyyyyyyyy: " + position);
+
+        Transac dataForThisCell= transacs.get(position);
+        int positionTrans=dataForThisCell.getIdTrans();
+
+
 
         switch (item.getItemId()) {
             case R.id.action_rv_change:
+                Log.d("DetalleComicsFragment", "El ID: " + String.valueOf(positionTrans));
                 // do your stuff
-
+                //transacs.get(position).get
 //               int x=recyclerView.getChildAdapterPosition(view);
                 // Comics dataForThisCell= comics.getComics().get(position);
                 //Comics dataForThisCell= comics.get(position);
@@ -235,20 +220,6 @@ public class RviewTransFragment extends Fragment {
         return super.onContextItemSelected(item);
     }
 
-
-
-
-//    private void modifyItem(List comics, int position){
-//        this.comics=comics;
-//        Comics dataForThisCell= comics.getComics().get(position);
-//        String name=dataForThisCell.getPhotoName();
-//        Log.d("DetalleComicsFragment", "El IDyyyyyyyyyyyyyyyy: " + position);
-//        Log.d("DetalleComicsFragment", "El ID: " + 233333);
-//        Log.d("DetalleComicsFragment", "El ID: " + name);
-//
-//        Toast.makeText(getContext(),"Se modifica este item, nombre " +name,
-//                Toast.LENGTH_LONG).show();
-//    }
 
     private void deleteItem() {
     }
@@ -300,11 +271,6 @@ public class RviewTransFragment extends Fragment {
 //    }
 
     public void setTransacs(TransacList transacs) {
-//        this.comics = comics;
-//        ComicsAdapter myAdapter = new ComicsAdapter (this.comics);
-//        recyclerView.setAdapter(myAdapter);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         transacAdapter=new TransacAdapter(transacs);
@@ -315,6 +281,7 @@ public class RviewTransFragment extends Fragment {
             public void onClick(View view) {
                 int x=recyclerView.getChildAdapterPosition(view);
                 Transac dataForThisCell= transacs.getTransacs().get(x);
+                int positionTrans=dataForThisCell.getIdTrans();
                 String dateTrans=dataForThisCell.getDateTrans();
                 String typeTrans= dataForThisCell.getTypeTrans();
                 String amounTrans = dataForThisCell.getAmounTrans();
@@ -348,8 +315,6 @@ public class RviewTransFragment extends Fragment {
                 infToBeSend.putString("transactionType", typeTrans);
                 infToBeSend.putString("amount", amounTrans);
                 infToBeSend.putString("Description", descripTrans);
-//
-//                getParentFragmentManager().setFragmentResult("key",infToBeSend);
                 //Navigation.findNavController(view).navigate(R.id.detalleTransacsFragment,infToBeSend);
             }
         });
