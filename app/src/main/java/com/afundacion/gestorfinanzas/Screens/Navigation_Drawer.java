@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.afundacion.gestorfinanzas.R;
 
@@ -15,6 +16,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +38,7 @@ public class Navigation_Drawer extends AppCompatActivity implements NavigationVi
         drawerLayout=findViewById(R.id.drawer_layout);
         navigationView=findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.toolbar_id);
-       // setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         
         menu=navigationView.getMenu();
         navigationView.getHeaderView(0);
@@ -58,24 +60,30 @@ public class Navigation_Drawer extends AppCompatActivity implements NavigationVi
             case R.id.nav_home:
                 drawerLayout.close();
                 Fragment fragmentHome = new HomeFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentHome).commit();
+               getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentHome).commit();
+                //Toast.makeText(context, "Maracana", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_estadisticas:
                 drawerLayout.close();
                 Fragment fragmentEstadisticas = new GraphDataFrag();
-                getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentEstadisticas).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentEstadisticas).commit();
+                //Toast.makeText(context, "Maracana", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_historial:
                 drawerLayout.close();
                 Fragment fragmentHistorial = new MovementFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentHistorial).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentHistorial).commit();
+                //Toast.makeText(context, "Maracana", Toast.LENGTH_LONG).show();
                 break;
             case R.id.nav_anadir:
                 drawerLayout.close();
                 Fragment fragmentAnadir = new TransictionFragment();
-                getSupportFragmentManager().beginTransaction().replace(R.id.drawer_layout, fragmentAnadir).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, fragmentAnadir).commit();
+                //Toast.makeText(context, "Maracana", Toast.LENGTH_LONG).show();
                 break;
         }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
 

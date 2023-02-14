@@ -18,15 +18,10 @@
 
     <fragment
         android:id="@+id/nav_historial"
-        android:name="com.afundacion.gestorfinanzas.Screens.HistorialFragment"
+        android:name="com.afundacion.gestorfinanzas.Screens.MovementFragment"
         tools:layout="@layout/fragment_historial" />
     <fragment
         android:id="@+id/nav_anadir"
-        android:name="com.afundacion.gestorfinanzas.Screens.AnadirFragment"
+        android:name="com.afundacion.gestorfinanzas.Screens.TransictionFragment"
         tools:layout="@layout/fragment_anadir" />
-    <fragment
-        android:id="@+id/rviewTransFragment"
-        android:name="com.afundacion.gestorfinanzas.rviewclass.RviewTransFragment"
-        android:label="fragment_rview_trans"
-        tools:layout="@layout/fragment_rview_trans" />
 </navigation>

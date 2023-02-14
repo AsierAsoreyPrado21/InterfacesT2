@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".Screens.Navigation_Drawer"
-            android:exported="true" >
+            android:exported="true"
+            android:theme="@style/Theme.GestorFinanzas.NoActionBar">
 
 
             <meta-data
