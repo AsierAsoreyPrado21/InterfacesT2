@@ -7,13 +7,22 @@ import java.io.Serializable;
 
 public class Transac implements Serializable {
 
+    private int idTrans;
     private String dateTrans;
     private String typeTrans;
     private String amounTrans;
     private String descripTrans;
 
+    public int getIdTrans() {
+        return idTrans;
+    }
+
+    public void setIdTrans(int idTrans) {
+        this.idTrans = idTrans;
+    }
 
     public Transac(JSONObject json) throws JSONException {
+        this.idTrans=json.getInt("id");
         this.dateTrans= json.getString("date");
         this.typeTrans= json.getString("transactionType");
         this.amounTrans= json.getString("amount");

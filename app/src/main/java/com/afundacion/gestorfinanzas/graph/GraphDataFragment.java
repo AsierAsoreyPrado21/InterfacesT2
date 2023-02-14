@@ -62,6 +62,7 @@ public class GraphDataFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
 
@@ -157,11 +158,6 @@ public class GraphDataFragment extends Fragment {
                                 JSONObject transacsObject = response.getJSONObject(i);
                                 transacsList.add(transacsObject);
 
-//                                transacsList.add(String.valueOf(transacsObject.getInt("amount")));
-//                                transacsList.add(transacsObject.getString("description"));
-//                                transacsList.add(transacsObject.getString("date"));
-//                                transacsList.add(transacsObject.getString("transactionType"));
-
                             }catch (JSONException e) {
                                 throw new RuntimeException(e);
                             }
@@ -183,16 +179,14 @@ public class GraphDataFragment extends Fragment {
 
                         if (error.networkResponse == null) {
                             // No se ha establecido la conexión
-                            //Snackbar.make(mainLayout, "Connection could not be established!", Snackbar.LENGTH_SHORT).show();
-                            //Toast.makeText(context, "Connection could not be established!", Toast.LENGTH_LONG).show();
+                           Toast.makeText(getContext(), "Connection could not be established!", Toast.LENGTH_LONG).show();
                         }else {
                             // El servidor ha dado una respuesta de error
 
                             // La siguiente variable contendrá el código HTTP,
                             // por ejemplo 401, 500,...
                             int serverCode = error.networkResponse.statusCode;
-                            //Snackbar.make(mainLayout, "Server status: "+String.valueOf(serverCode), Snackbar.LENGTH_SHORT).show();
-                            //Toast.makeText(context, "Server status is "+String.valueOf(serverCode), Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Server status is "+String.valueOf(serverCode), Toast.LENGTH_LONG).show();
                         }
 
                     }
@@ -241,7 +235,7 @@ public class GraphDataFragment extends Fragment {
 
                 //String type =transacsList.get (i+1);
 
-                if(type.equalsIgnoreCase("ingreso")){
+                if(type.equalsIgnoreCase("Ingreso")){
 
                     String amount=jsonObject.getString("amount");
 
@@ -251,11 +245,11 @@ public class GraphDataFragment extends Fragment {
                 }
 
 
-                if(type.equalsIgnoreCase("gasto")){
+                if(type.equalsIgnoreCase("Gasto")){
                     String amount=jsonObject.getString("amount");
                     //String amount = transacsList.get (i-2);
                     int amount1=Integer.parseInt(amount);
-                    yIncomes.add(new Entry(dd1,amount1));
+                    yCosts.add(new Entry(dd1,amount1));
                 }
                 xDays.add(String.valueOf(dd1));
                 //dd++;
@@ -283,7 +277,7 @@ public class GraphDataFragment extends Fragment {
 
         String[] xdays = new String[xDays.size()];
         for(int i=0; i<xDays.size();i++){
-            xdays[i] = xDays.get(i).toString();
+            xdays[i] = xDays.get(i); //.toString();
         }
         //String [] xdays = {"12","13","14","15","16","17","18"};
         ArrayList<ILineDataSet> lineDataSets = new ArrayList<>();
